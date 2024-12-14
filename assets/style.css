@@ -1,0 +1,582 @@
+*{
+    padding: 0;
+    margin: 0;
+}
+body{
+    display: flex;
+    width: 100%;
+    min-height: 100vh;
+    background-image: url(./images/stadium_background.webp);
+    background-repeat: no-repeat;
+    background-size: cover;
+
+}
+
+.stade-content{
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    
+}
+.backup-players{
+    width: 900px;
+    display: flex;
+    flex-wrap: wrap;
+    /* gap: 10px; */
+    margin: auto;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    
+}
+.card {
+    width: 200px;
+    height: 240px;
+    /* background-color: #249acd; */
+    background-image: url(./images/badge_gold.webp);
+    background-position: center;
+    background-size: cover;
+    position: relative;
+    border-radius: 15px;    
+    text-align: center;      
+}
+
+.rating-flex-deux{
+    display: flex;
+    gap: 5px;
+}
+.input-rating{
+    width: 140px;
+}
+.player-name{
+    font-weight: bold;
+    font-size: 15px;
+}
+.pac-rating{
+    font-weight: bold;
+    font-size: 12px;
+}
+.rating-position{
+    position: absolute;
+    left: 35px
+}
+.card-content{
+    margin-top: 40px;
+    position: relative;
+    
+}
+.card img{
+    width: 120px;
+}
+.player-rating{
+    font-weight: bold;
+}
+.player-score{
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+    font-size: 10px;
+}
+.flags{
+    display: flex;
+    justify-content: center;
+    gap: 4px;
+}
+
+.flags img{
+    width: 20px;
+    height: 13px;
+}
+
+ /* form style */
+.form-player{
+    width: 20%;
+    opacity: 0.8;
+    color: white;
+    
+}
+.form-container {
+    max-width: 500px;
+    margin: 20px auto;
+    margin-right: 20px;
+    padding: 20px;
+    background-color: #191919;
+    border-radius: 8px;   
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px; 
+}
+.normal-player{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.goalkeeper-player{
+    display: none;  
+   
+}
+/* bouton d'edit*/
+.EditPlayer{
+    display: none;
+}
+
+.player-ratings{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+form input{
+    padding: 10px;
+    border-radius: 5px;
+}
+
+form select{
+    padding: 10px;
+    border-radius: 5px;
+}
+
+h2 {
+    text-align: center;
+    color: white;
+    margin-bottom: 20px;
+}
+
+button {
+    background-color: #5c7029;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    border: none;
+    transition: background-color 0.3s;
+    padding: 10px;
+    border-radius: 5px;
+    width: 40%;
+    margin: auto;
+    margin-top: 10px;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+.stade{
+    width: 900px;
+    display: grid;
+    grid-template-columns: repeat(18, 1fr);
+    grid-template-rows: repeat(37, 1fr);
+    height: 900px;
+    background-image: url(./images/black-stade.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    margin: auto ;
+    margin-top: 50px;
+    position: relative;
+}
+
+.delete-icon {
+    position: absolute;
+    top: 10px;
+    right: 26px;
+    font-size: 18px;  
+    cursor: pointer;
+    color: #ae0707;  
+    font-weight: bold;
+}
+
+/* style d'icon de modification des joueur*/
+.delete-icon-modif{
+    position: absolute;
+    top: 10px;
+    right: 45px;
+    font-size: 18px;  
+    cursor: pointer;
+    color: #190780;  
+    font-weight: bold;
+}
+
+.delete-icon-modif:hover {
+    color: rgb(81, 94, 198);  
+}
+.delete-icon:hover {
+    color: red;  
+}
+.card-GL{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+ /* style de tous les card players */
+
+.style-card-player{
+    background-image: url(./images/black-card.webp);
+    background-position: center;
+    background-size: cover;
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 100%; 
+    height: 230px;
+    color: white;
+}
+
+
+ /* emplacement de chaque card en stade (grid) */
+.LW {
+    grid-row: 6/15;
+    grid-column: 2/6;
+
+}
+.LW-name{
+    grid-row: 14/16;
+    grid-column: 3/5;
+
+}
+.ST-name{
+    grid-row: 13/15;
+    grid-column: 9/11;
+
+}
+.RW-name{
+    grid-row: 14/16;
+    grid-column: 15/17;
+
+}
+.CM1-name{
+    grid-column: 5/7;
+    grid-row: 22/24;
+}
+
+.CM2-name{
+    grid-column: 9/11;
+    grid-row: 22/24;
+}
+.CM3-name{
+    grid-column: 13/15;
+    grid-row: 22/24;
+}
+.LB-name{
+    grid-column: 2/4;
+    grid-row: 30/32;
+}
+.CB1-name{
+    grid-column: 7/9;
+    grid-row: 30/32;
+}
+.CB2-name{
+    grid-column: 12/14;
+    grid-row: 30/32;
+}
+.RB-name{
+    grid-column: 16/18;
+    grid-row: 30/32;
+}
+.GK-name{
+    grid-row: 36/38;
+    grid-column: 9/11;
+    padding-top: 40px;
+
+}
+
+/* nom des positions des joueurs au stade */
+.commun-name{
+    color: white;
+    display: flex;
+    justify-content: center ;
+    align-items: center;
+    margin-top: 18px;
+}
+
+
+.ST{
+    grid-row: 5/14;
+    grid-column: 8/12 ;
+
+
+}
+
+.RW{
+    grid-column: 14/18;
+    grid-row: 6/15;
+
+
+}
+.CM1{
+
+    grid-column: 4/8;
+    grid-row: 15/23;
+
+    
+}
+.CM2{
+
+    grid-column: 8/12;
+    grid-row: 15/23;
+
+}
+.CM3{
+
+    grid-column: 12/16;
+    grid-row: 15/23;
+
+}
+.GL {
+
+    grid-column: 8/12;
+    grid-row: 30/38;
+
+}
+
+.LB{
+
+    grid-column: 1/5;
+    grid-row: 23/31;
+
+}
+.CB1{
+
+    grid-column: 6/10;
+    grid-row: 23/31;
+
+}
+.CB2{
+
+    grid-column: 11/15;
+    grid-row: 23/31;
+
+}
+.RB{
+
+    grid-column: 15/19;
+    grid-row: 23/31;;
+
+}
+
+/* style card- goalkeeper */
+.rating-position-gl{
+    position: absolute;
+    top: 50px;
+    left: 40px;
+    font-size: 15px;
+}
+.player-rating-gl{
+    font-weight: bold;
+}
+.card-GL img{
+    width: 105px;
+    margin-top: 40px;
+}
+
+.player-informations-GL{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.player-score-GL{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-size: 9px;
+    
+}
+.flex-player{
+    display: flex;
+    gap: 5px;
+
+}
+.player-name-GL{
+    margin-top: 4px;
+    font-weight: bold;
+    font-size: 13px;
+
+}
+.player-flex{
+    display: flex;
+    flex-direction: column;
+}
+
+.flags-player{
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+    margin-top: 0;
+}
+.flags-player img{
+    width: 12px;
+    height: 10px;
+    margin-top: 2px;
+}
+.error-photo-player , .error-logo-player, .error-flag-player, .error-nationality-player, .error-ligue-player , .error-rating-player, .error-pac-player, .error-sho-player, .error-pas-player, .error-dri-player, .error-def-player, .error-phy-player, .error-div-player, .error-han-player, .error-kic-player, .error-ref-player, .error-spd-player, .error-pos-player{
+    color: red;
+    display: none;
+} 
+#error-message{
+    color: red;
+    display: none;
+}
+
+.id-none{
+    font-size: 1px;
+    color: gray;
+}
+
+/* Style du pop-up */
+.popup {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 10px;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(52, 48, 48, 0.5);
+    
+}
+
+.popup-content {
+    background-color: white;
+    margin: 10px auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 700px;
+
+}
+.popup-cards{
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+
+.close {
+    color: #aaa;
+    font-size: 28px;
+    font-weight: bold;
+    float: right;
+}
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+.card-popup {
+    padding: 10px;
+    text-align: center;
+    width: 120px;
+    background-image: url(./images/badge_gold.webp);
+    background-position: center;
+    background-size: cover;
+}
+
+.card-popup i {
+    display: none;
+}
+
+.card-button{
+    width: 20px;
+    background-color: #36b783;
+    width: 70%;
+    font-size: small;
+}
+.fa-rotate{
+    position: absolute;
+    top: 2px;
+}
+.popup-cards p {
+    font-size: 18px;
+    font-weight: bold;
+    margin: 0;
+    margin-top: 20px;
+}
+
+
+
+@media screen and (max-width: 1026px) and (min-width: 481px){
+    body{
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+    }
+    .stade{
+        width: 700px;
+        /* margin: 30px auto; */
+
+    }
+
+    .stade-content{
+        width: 100%;
+    }
+    .form-player{
+        margin: 20px auto;
+        width: 500px;
+        margin-bottom: 400px;
+    }
+    .fa-regular, .fa-solid{
+        font-size: 15px;
+    }
+    
+    .backup-players{
+        width: 600px;
+    }
+    .card{
+        width: 150px;
+        height: 200px;
+    }
+    .rating-position-gl{
+        left: 20px;
+    }
+    .rating-position {
+        left: 25px;
+    }
+    .card img {
+        width: 90px;
+    }
+    .player-score {
+        font-size: 7px;
+    }
+    .player-name {
+        font-weight: 13px;
+    }
+    .flags{
+        display: none;
+    }
+}
+@media screen and (min-width: 1026px){
+    body{
+        display: flex;
+        justify-content: center;
+    }
+    .form-player{
+        margin-left: 10px;
+        width: 400px;
+
+    }
+    .stade{
+        margin: 30px auto;
+        /* margin-left: 10px; */
+    }
+    .stade-content{
+        margin-left: 50px;
+    }
+}
+@media screen and (max-width: 481px){
+    body{
+        padding: 0;
+        margin: 0;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+    }
+    .form-player{
+        margin-left: 60px;
+        width: 500px;
+
+    }
+}
