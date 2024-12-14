@@ -219,27 +219,38 @@
 											<th scope="col">#</th>
 											<th scope="col">First</th>
 											<th scope="col">Last</th>
-											<th scope="col">Handle</th>
+											<th scope="col">nationality</th>
+											<th scope="col">club</th>
+											<th scope="col">rating</th>
+											<th scope="col">position</th>
+											<th scope="col">pace</th>
+											<th scope="col">shooting</th>
+											<th scope="col">passing</th>
+											<th scope="col">dribbling</th>
+											<th scope="col">defending</th>
+											<th scope="col">physical</th>
 										</tr>
 									</thead>
 									<tbody>
 										<tr>
 											<td>1</td>
-											<td>Mark</td>
-											<td>Otto</td>
-											<td>@mdo</td>
+											<td>ronaldo</td>
+											<td>cristiano</td>
+											<td>portugal</td>
+											<td>al hilal</td>
+											<td>95</td>
+											<td>striker</td>
+											<td>80</td>
+											<td>88</td>
+											<td>95</td>
+											<td>84</td>
+											<td>94</td>
+											<td>94</td>
+											<td><button class="btn btn-primary ">Primary</button></td>
+											<td><button class="btn btn-danger">Danger</button></td>
 										</tr>
-										<tr>
-											<td>2</td>
-											<td>Jacob</td>
-											<td>Thornton</td>
-											<td>@fat</td>
-										</tr>
-										<tr>
-											<td>3</td>
-											<td colspan="2">Larry the Bird</td>
-											<td>@twitter</td>
-										</tr>
+
+										
 									</tbody>
 								</table>
 							</div>
