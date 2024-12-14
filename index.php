@@ -2,7 +2,7 @@
 <html>
 <head>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-	<title>Ready Bootstrap Dashboard</title>
+	<title>FUT Dashboard</title>
 	<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
 	<link rel="stylesheet" href="assets/css/bootstrap.min.css">
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
@@ -14,8 +14,48 @@
 		<div class="main-header">
 			<div class="logo-header">
 				<a href="index.html" class="logo">
-					Ready Dashboard
+					FUT Champions
 				</a>
+				<?php
+					$servername = "localhost"; 
+					$username = "root"; 
+					$password = ""; 
+					$dbname = "fut_champions_db"; 
+
+					$conn = new mysqli($servername, $username, $password, $dbname);
+
+					if ($conn->connect_error) {
+					    die("Connection failed: " . $conn->connect_error);
+					}
+
+					// echo "Connected successfully";
+					$sql = "SELECT name FROM nationalities"; 
+					$result = $conn->query($sql);
+
+					// Store the nationality names in an array
+					$nationalities = [];
+					if ($result->num_rows > 0) {					
+    					while ($row = $result->fetch_assoc()) {
+        					$nationalities[] = $row['name'];
+    					}
+					} else {					
+    					echo "No nationalities found.";
+					}
+
+					$sql_club = "SELECT name FROM clubs"; 
+					$result_club = $conn->query($sql_club);
+
+					// Store the nationality names in an array
+					$clubs = [];
+					if ($result_club->num_rows > 0) {					
+    					while ($row = $result_club->fetch_assoc()) {
+        					$clubs[] = $row['name'];
+    					}
+					} else {					
+    					echo "No clubs found.";
+					}
+					// $conn->close();
+				?>
 				<button class="navbar-toggler sidenav-toggler ml-auto" type="button" data-toggle="collapse" data-target="collapse" aria-controls="sidebar" aria-expanded="false" aria-label="Toggle navigation">
 					<span class="navbar-toggler-icon"></span>
 				</button>
@@ -230,26 +270,47 @@
 											<th scope="col">physical</th>
 										</tr>
 									</thead>
-									<tbody>
-										<tr>
-											<td>1</td>
-											<td>ronaldo</td>
-											<td>portugal</td>
-											<td>al hilal</td>
-											<td>95</td>
-											<td>striker</td>
-											<td>80</td>
-											<td>88</td>
-											<td>95</td>
-											<td>84</td>
-											<td>94</td>
-											<td>94</td>
-											<td><button class="btn btn-primary ">Primary</button></td>
-											<td><button class="btn btn-danger">Danger</button></td>
-										</tr>
+									<?php 
+										$sql = "SELECT p.id_player, p.name_player, n.name AS nationality, c.name AS club, 
+												r.pace, r.dribbling, r.passing, r.shooting, r.defending, r.physical
+										FROM players p
+										JOIN nationalities n ON p.id_nationality = n.id_nationality
+										JOIN clubs c ON p.id_club = c.id_club
+										JOIN normal_players r ON p.id_normal_player = r.id_normal_player";
 
-										
-									</tbody>
+										// Check the database connection
+										if ($conn->connect_error) {
+											die("Connection failed: " . $conn->connect_error);
+										}
+
+										// Execute the query and check for results
+										if ($result = $conn->query($sql)) {
+											if ($result->num_rows > 0) {
+												echo '<tbody>';
+												while ($row = $result->fetch_assoc()) {
+													echo '<tr>';
+													echo '<td>' . $row['id_player'] . '</td>';
+													echo '<td>' . $row['name_player'] . '</td>';
+													echo '<td>' . $row['nationality'] . '</td>';
+													echo '<td>' . $row['club'] . '</td>';
+													echo '<td>' . $row['pace'] . '</td>';
+													echo '<td>' . $row['dribbling'] . '</td>';
+													echo '<td>' . $row['passing'] . '</td>';
+													echo '<td>' . $row['shooting'] . '</td>';
+													echo '<td>' . $row['defending'] . '</td>';
+													echo '<td>' . $row['physical'] . '</td>';
+													echo '<td><button class="btn btn-primary">Primary</button></td>';
+													echo '<td><button class="btn btn-danger">Danger</button></td>';
+													echo '</tr>';
+												}
+												echo '</tbody>';
+											} else {
+												echo "<tr><td colspan='12'>No players found.</td></tr>";
+											}
+										} else {
+											echo "Error in SQL query: " . $conn->error;
+										}
+									?>
 								</table>
 							</div>
 						</div>
@@ -280,24 +341,20 @@
 					<input type="text" class="form-control input-square" id="squareInput" placeholder="enter url">
 				</div>
 				<div class="form-group">
-					<label for="solidSelect">nationality: </label>
-					<select class="form-control input-solid" id="solidSelect">
-						<option>1</option>
-						<option>2</option>
-						<option>3</option>
-						<option>4</option>
-						<option>5</option>
-					</select>
-				</div>		
+    				<label for="nationalitySelect">Nationality: </label>
+    				<select class="form-control input-solid" id="nationalitySelect">
+        				<?php foreach ($nationalities as $nationality): ?>
+            				<option value="<?= htmlspecialchars($nationality) ?>"><?= htmlspecialchars($nationality) ?></option>
+        				<?php endforeach; ?>
+    				</select>
+				</div>	
 				<div class="form-group">
 					<label for="solidSelect">Club: </label>
-					<select class="form-control input-solid" id="solidSelect">
-						<option>1</option>
-						<option>2</option>
-						<option>3</option>
-						<option>4</option>
-						<option>5</option>
-					</select>
+					<select class="form-control input-solid" id="clubSelect">
+        				<?php foreach ($clubs as $club): ?>
+            				<option value="<?= htmlspecialchars($club) ?>"><?= htmlspecialchars($club) ?></option>
+        				<?php endforeach; ?>
+    				</select>
 				</div>	
 				<div class="form-group">
 					<label for="squareInput">Rating: </label>
@@ -345,6 +402,7 @@
 				</div>
 
 				<div class="modal-footer">
+					<button class="btn btn-success">Submit</button>
 					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 				</div>
 			</div>
