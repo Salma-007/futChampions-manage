@@ -28,7 +28,7 @@
 					
 					<ul class="nav">
 						<li class="nav-item active">
-							<a href="index.html">
+							<a href="index.php">
 								<i class="la la-dashboard"></i>
 								<p>Dashboard</p>
 							</a>
@@ -268,15 +268,24 @@
 		<div class="modal-dialog modal-dialog-centered" role="document">
 			<div class="modal-content">
 				<div class="modal-header bg-primary">
-					<h6 class="modal-title"><i class="la la-frown-o"></i> Under Development</h6>
+					<h6 class="modal-title"><i class="la la-frown-o"></i> Add a Player: </h6>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
-				<div class="modal-body text-center">									
-					<p>Currently the pro version of the <b>Ready Dashboard</b> Bootstrap is in progress development</p>
-					<p>
-						<b>We'll let you know when it's done</b></p>
+				<div class="form-group">
+					<label for="squareInput">Name: </label>
+					<input type="text" class="form-control input-square" id="squareInput" placeholder="Square Input">
+				</div>
+				<div class="form-group">
+					<label for="squareSelect">Square Select</label>
+					<select class="form-control input-square" id="squareSelect">
+						<option>1</option>
+						<option>2</option>
+						<option>3</option>
+						<option>4</option>
+						<option>5</option>
+					</select>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
