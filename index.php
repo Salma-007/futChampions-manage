@@ -217,8 +217,7 @@
 									<thead>
 										<tr>
 											<th scope="col">#</th>
-											<th scope="col">First</th>
-											<th scope="col">Last</th>
+											<th scope="col">Name</th>
 											<th scope="col">nationality</th>
 											<th scope="col">club</th>
 											<th scope="col">rating</th>
@@ -235,7 +234,6 @@
 										<tr>
 											<td>1</td>
 											<td>ronaldo</td>
-											<td>cristiano</td>
 											<td>portugal</td>
 											<td>al hilal</td>
 											<td>95</td>
@@ -268,25 +266,84 @@
 		<div class="modal-dialog modal-dialog-centered" role="document">
 			<div class="modal-content">
 				<div class="modal-header bg-primary">
-					<h6 class="modal-title"><i class="la la-frown-o"></i> Add a Player: </h6>
+					<h6 class="modal-title"> Add a Player: </h6>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
 				<div class="form-group">
 					<label for="squareInput">Name: </label>
-					<input type="text" class="form-control input-square" id="squareInput" placeholder="Square Input">
+					<input type="text" class="form-control input-square" id="squareInput" placeholder="enter name">
 				</div>
 				<div class="form-group">
-					<label for="squareSelect">Square Select</label>
-					<select class="form-control input-square" id="squareSelect">
+					<label for="squareInput">Photo: </label>
+					<input type="text" class="form-control input-square" id="squareInput" placeholder="enter url">
+				</div>
+				<div class="form-group">
+					<label for="solidSelect">nationality: </label>
+					<select class="form-control input-solid" id="solidSelect">
 						<option>1</option>
 						<option>2</option>
 						<option>3</option>
 						<option>4</option>
 						<option>5</option>
 					</select>
+				</div>		
+				<div class="form-group">
+					<label for="solidSelect">Club: </label>
+					<select class="form-control input-solid" id="solidSelect">
+						<option>1</option>
+						<option>2</option>
+						<option>3</option>
+						<option>4</option>
+						<option>5</option>
+					</select>
+				</div>	
+				<div class="form-group">
+					<label for="squareInput">Rating: </label>
+					<input type="text" class="form-control input-square" id="squareInput" placeholder="1 - 99">
 				</div>
+				<div class="form-group">
+					<label for="squareSelect">Position:</label>
+					<select class="form-control input-square" id="squareSelect">
+						<option>ST</option>
+						<option>GK</option>
+						<option>RW</option>
+						<option>LW</option>
+						<option>CM</option>
+					</select>
+				</div>
+				<div class="form-group row">
+				    <div class="col-md-6">
+				        <label for="smallInput1">Small Input 1</label>
+				        <input type="text" class="form-control form-control-sm" id="smallInput1" placeholder="Small Input">
+				    </div>
+				    <div class="col-md-6">
+				        <label for="smallInput2">Small Input 2</label>
+				        <input type="text" class="form-control form-control-sm" id="smallInput2" placeholder="Small Input">
+				    </div>
+				</div>
+				<div class="form-group row">
+				    <div class="col-md-6">
+				        <label for="smallInput1">Small Input 1</label>
+				        <input type="text" class="form-control form-control-sm" id="smallInput1" placeholder="Small Input">
+				    </div>
+				    <div class="col-md-6">
+				        <label for="smallInput2">Small Input 2</label>
+				        <input type="text" class="form-control form-control-sm" id="smallInput2" placeholder="Small Input">
+				    </div>
+				</div>
+				<div class="form-group row">
+				    <div class="col-md-6">
+				        <label for="smallInput1">Small Input 1</label>
+				        <input type="text" class="form-control form-control-sm" id="smallInput1" placeholder="Small Input">
+				    </div>
+				    <div class="col-md-6">
+				        <label for="smallInput2">Small Input 2</label>
+				        <input type="text" class="form-control form-control-sm" id="smallInput2" placeholder="Small Input">
+				    </div>
+				</div>
+
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 				</div>
