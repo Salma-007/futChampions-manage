@@ -271,7 +271,7 @@
 										</tr>
 									</thead>
 									<?php 
-										$sql = "SELECT p.id_player, p.name_player, n.name AS nationality, c.name AS club, 
+										$sql = "SELECT p.id_player, p.name_player, n.name AS nationality, c.name AS club, p.rating, p.position,
 												r.pace, r.dribbling, r.passing, r.shooting, r.defending, r.physical
 										FROM players p
 										JOIN nationalities n ON p.id_nationality = n.id_nationality
@@ -283,7 +283,6 @@
 											die("Connection failed: " . $conn->connect_error);
 										}
 
-										// Execute the query and check for results
 										if ($result = $conn->query($sql)) {
 											if ($result->num_rows > 0) {
 												echo '<tbody>';
@@ -293,14 +292,16 @@
 													echo '<td>' . $row['name_player'] . '</td>';
 													echo '<td>' . $row['nationality'] . '</td>';
 													echo '<td>' . $row['club'] . '</td>';
+													echo '<td>' . $row['rating'] . '</td>';
+													echo '<td>' . $row['position'] . '</td>';
 													echo '<td>' . $row['pace'] . '</td>';
 													echo '<td>' . $row['dribbling'] . '</td>';
 													echo '<td>' . $row['passing'] . '</td>';
 													echo '<td>' . $row['shooting'] . '</td>';
 													echo '<td>' . $row['defending'] . '</td>';
 													echo '<td>' . $row['physical'] . '</td>';
-													echo '<td><button class="btn btn-primary">Primary</button></td>';
-													echo '<td><button class="btn btn-danger">Danger</button></td>';
+													echo '<td><button class="btn btn-primary">update</button></td>';
+													echo '<td><button class="btn btn-danger">delete</button></td>';
 													echo '</tr>';
 												}
 												echo '</tbody>';
@@ -332,79 +333,84 @@
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
-				<div class="form-group">
-					<label for="squareInput">Name: </label>
-					<input type="text" class="form-control input-square" id="squareInput" placeholder="enter name">
-				</div>
-				<div class="form-group">
-					<label for="squareInput">Photo: </label>
-					<input type="text" class="form-control input-square" id="squareInput" placeholder="enter url">
-				</div>
-				<div class="form-group">
-    				<label for="nationalitySelect">Nationality: </label>
-    				<select class="form-control input-solid" id="nationalitySelect">
-        				<?php foreach ($nationalities as $nationality): ?>
-            				<option value="<?= htmlspecialchars($nationality) ?>"><?= htmlspecialchars($nationality) ?></option>
-        				<?php endforeach; ?>
-    				</select>
-				</div>	
-				<div class="form-group">
-					<label for="solidSelect">Club: </label>
-					<select class="form-control input-solid" id="clubSelect">
-        				<?php foreach ($clubs as $club): ?>
-            				<option value="<?= htmlspecialchars($club) ?>"><?= htmlspecialchars($club) ?></option>
-        				<?php endforeach; ?>
-    				</select>
-				</div>	
-				<div class="form-group">
-					<label for="squareInput">Rating: </label>
-					<input type="text" class="form-control input-square" id="squareInput" placeholder="1 - 99">
-				</div>
-				<div class="form-group">
-					<label for="squareSelect">Position:</label>
-					<select class="form-control input-square" id="squareSelect">
-						<option>ST</option>
-						<option>GK</option>
-						<option>RW</option>
-						<option>LW</option>
-						<option>CM</option>
-					</select>
-				</div>
-				<div class="form-group row">
-				    <div class="col-md-6">
-				        <label for="smallInput1">Small Input 1</label>
-				        <input type="text" class="form-control form-control-sm" id="smallInput1" placeholder="Small Input">
-				    </div>
-				    <div class="col-md-6">
-				        <label for="smallInput2">Small Input 2</label>
-				        <input type="text" class="form-control form-control-sm" id="smallInput2" placeholder="Small Input">
-				    </div>
-				</div>
-				<div class="form-group row">
-				    <div class="col-md-6">
-				        <label for="smallInput1">Small Input 1</label>
-				        <input type="text" class="form-control form-control-sm" id="smallInput1" placeholder="Small Input">
-				    </div>
-				    <div class="col-md-6">
-				        <label for="smallInput2">Small Input 2</label>
-				        <input type="text" class="form-control form-control-sm" id="smallInput2" placeholder="Small Input">
-				    </div>
-				</div>
-				<div class="form-group row">
-				    <div class="col-md-6">
-				        <label for="smallInput1">Small Input 1</label>
-				        <input type="text" class="form-control form-control-sm" id="smallInput1" placeholder="Small Input">
-				    </div>
-				    <div class="col-md-6">
-				        <label for="smallInput2">Small Input 2</label>
-				        <input type="text" class="form-control form-control-sm" id="smallInput2" placeholder="Small Input">
-				    </div>
-				</div>
+				<form action="add_player.php" method="POST">
+					<div class="form-group">
+						<label for="name_input">Name: </label>
+						<input type="text" class="form-control input-square" id="name_input" name="name_input" placeholder="enter name">
+					</div>
+					<div class="form-group">
+						<label for="photo_input">Photo: </label>
+						<input type="text" class="form-control input-square" id="photo_input" name="photo_input" placeholder="enter url">
+					</div>
+					<div class="form-group">
+						<label for="nationalitySelect">Nationality: </label>
+						<select class="form-control input-solid" id="nationalitySelect" name="nationalitySelect">
+							<?php foreach ($nationalities as $nationality): ?>
+								<option value="<?= htmlspecialchars($nationality) ?>"><?= htmlspecialchars($nationality) ?></option>
+							<?php endforeach; ?>
+						</select>
+					</div>	
+					<div class="form-group">
+						<label for="solidSelect">Club: </label>
+						<select class="form-control input-solid" id="clubSelect" name="clubSelect">
+							<?php foreach ($clubs as $club): ?>
+								<option value="<?= htmlspecialchars($club) ?>"><?= htmlspecialchars($club) ?></option>
+							<?php endforeach; ?>
+						</select>
+					</div>	
+					<div class="form-group">
+						<label for="rating_input">Rating: </label>
+						<input type="text" class="form-control input-square" id="rating_input" name="rating_input" placeholder="1 - 99">
+					</div>
+					<div class="form-group">
+						<label for="positionSelect">Position:</label>
+						<select class="form-control input-square" id="positionSelect" name="positionSelect">
+							<option value="ST">ST</option>
+							<option value="RW">RW</option>
+							<option value="LW">LW</option>	
+							<option value="CM">CM</option>
+							<option value="CB">CB</option>
+							<option value="LB">LB</option>
+							<option value="RB">RB</option>
+							<option value="GK">GK</option>
+						</select>
+					</div>
+					<div class="form-group row">
+						<div class="col-md-6">
+							<label for="pace_input">Pace: </label>
+							<input type="text" class="form-control form-control-sm" id="pace_input" name="pace_input" placeholder="enter rating">
+						</div>
+						<div class="col-md-6">
+							<label for="dribbling_input">Dribbling: </label>
+							<input type="text" class="form-control form-control-sm" id="dribbling_input" name="dribbling_input" placeholder="enter rating">
+						</div>
+					</div>
+					<div class="form-group row">
+						<div class="col-md-6">
+							<label for="passing_input">Passing: </label>
+							<input type="text" class="form-control form-control-sm" id="passing_input" name="passing_input" placeholder="enter rating">
+						</div>
+						<div class="col-md-6">
+							<label for="shooting_input">Shooting: </label>
+							<input type="text" class="form-control form-control-sm" id="shooting_input" name="shooting_input" placeholder="enter rating">
+						</div>
+					</div>
+					<div class="form-group row">
+						<div class="col-md-6">
+							<label for="defending_input">Defending: </label>
+							<input type="text" class="form-control form-control-sm" id="defending_input" name="defending_input" placeholder="enter rating">
+						</div>
+						<div class="col-md-6">
+							<label for="physical_input">Physical: </label>
+							<input type="text" class="form-control form-control-sm" id="physical_input" name="physical_input" placeholder="enter rating">
+						</div>
+					</div>
 
-				<div class="modal-footer">
-					<button class="btn btn-success">Submit</button>
-					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-				</div>
+					<div class="modal-footer">
+						<button type="submit" class="btn btn-success" >Submit</button>
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+					</div>
+				</form>
 			</div>
 		</div>
 	</div>
