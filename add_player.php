@@ -33,6 +33,7 @@
     $stmt->bind_result($nationality_id);
     $stmt->fetch();
     $stmt->close();
+    
     // fetch club id 
     $club_id_query = "SELECT id_club FROM clubs WHERE name = ?";
     $stmt = $conn->prepare($club_id_query);
