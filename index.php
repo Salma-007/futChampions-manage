@@ -33,18 +33,7 @@
     					echo "No nationalities found.";
 					}
 
-					$sql_club = "SELECT name FROM clubs"; 
-					$result_club = $conn->query($sql_club);
 
-					// Store the nationality names in an array
-					$clubs = [];
-					if ($result_club->num_rows > 0) {					
-    					while ($row = $result_club->fetch_assoc()) {
-        					$clubs[] = $row['name'];
-    					}
-					} else {					
-    					echo "No clubs found.";
-					}
 					// $conn->close();
 				?>
 				<button class="navbar-toggler sidenav-toggler ml-auto" type="button" data-toggle="collapse" data-target="collapse" aria-controls="sidebar" aria-expanded="false" aria-label="Toggle navigation">
@@ -330,14 +319,15 @@
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
-				<form action="add_player.php" method="POST">
+				<form action="add_player.php" method="POST" enctype="multipart/form-data">
 					<div class="form-group">
 						<label for="name_input">Name: </label>
 						<input type="text" class="form-control input-square" id="name_input" name="name_input" placeholder="enter name">
 					</div>
 					<div class="form-group">
 						<label for="photo_input">Photo: </label>
-						<input type="text" class="form-control input-square" id="photo_input" name="photo_input" placeholder="enter url">
+						<!-- <input type="text" class="form-control input-square" id="photo_input" name="photo_input" placeholder="enter url"> -->
+						<input type="file" id="photo_input" accept="image/*" class="form-control input-square" name="photo_input">
 					</div>
 					<div class="form-group">
 						<label for="nationalitySelect">Nationality: </label>
@@ -347,14 +337,16 @@
 							<?php endforeach; ?>
 						</select>
 					</div>	
-					<div class="form-group">
-						<label for="solidSelect">Club: </label>
-						<select class="form-control input-solid" id="clubSelect" name="clubSelect">
-							<?php foreach ($clubs as $club): ?>
-								<option value="<?= htmlspecialchars($club) ?>"><?= htmlspecialchars($club) ?></option>
-							<?php endforeach; ?>
-						</select>
-					</div>	
+					<div class="form-group row">
+						<div class="col-md-6">
+							<label for="pace_input">Club: </label>
+							<input type="text" class="form-control input-solid" id="clubSelect" name="clubSelect" placeholder="enter club">
+						</div>
+						<div class="col-md-6">
+							<label for="logo_club">logo: </label>
+							<input type="file" id="logo_club" accept="image/*" class="form-control input-square" name="logo_club">
+						</div>
+					</div>
 					<div class="form-group">
 						<label for="rating_input">Rating: </label>
 						<input type="text" class="form-control input-square" id="rating_input" name="rating_input" placeholder="1 - 99">
@@ -441,12 +433,8 @@
 						</select>
 					</div>	
 					<div class="form-group">
-						<label for="solidSelect">Club: </label>
-						<select class="form-control input-solid" id="clubSelect" name="clubSelect">
-							<?php foreach ($clubs as $club): ?>
-								<option value="<?= htmlspecialchars($club) ?>"><?= htmlspecialchars($club) ?></option>
-							<?php endforeach; ?>
-						</select>
+						<label for="clubSelect">Club: </label>
+						<input type="text" class="form-control input-solid" id="clubSelect" name="clubSelect" placeholder="enter club">
 					</div>	
 					<div class="form-group">
 						<label for="rating_input">Rating: </label>
