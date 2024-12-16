@@ -248,6 +248,11 @@
 								</div>
 							</div> -->
 						</div>
+						<?php 
+						if(isset($_GET['delete_msg'])){
+							echo"<h6>".$_GET['delete_msg']."</h6>";
+						}
+						?>
 						<div class="card">
 							<div class="card-header">
 								<div class="card-title">Players :</div>
@@ -300,8 +305,9 @@
 													echo '<td>' . $row['shooting'] . '</td>';
 													echo '<td>' . $row['defending'] . '</td>';
 													echo '<td>' . $row['physical'] . '</td>';
-													echo '<td><button class="btn btn-primary">update</button></td>';
-													echo '<td><button class="btn btn-danger">delete</button></td>';
+													echo '<td><button class="btn btn-primary" data-toggle="modal" data-target="#modalUpdateplayer" data-id="' . $row['id_player'] . '" data-name="' . $row['name_player'] . '" >update</button></td>';
+													echo '<td><a href="delete_player.php?id_player=' . urlencode($row['id_player']) . '" class="btn btn-danger">delete</a></td>';
+
 													echo '</tr>';
 												}
 												echo '</tbody>';
@@ -414,6 +420,116 @@
 			</div>
 		</div>
 	</div>
+
+	<div class="modal fade" id="modalUpdateplayer" tabindex="-1" role="dialog" aria-labelledby="modalUpdatePro" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header bg-primary">
+					<h6 class="modal-title"> Update a Player: </h6>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<form action="update_player.php" method="POST">
+					<div class="form-group">
+					<input type="hidden" id="player_id_input" name="player_id_input">
+
+						<label for="name_input">Name: </label>
+						<input type="text" class="form-control input-square" id="name_input" name="name_input" placeholder="enter name">
+					</div>
+					<div class="form-group">
+						<label for="photo_input">Photo: </label>
+						<input type="text" class="form-control input-square" id="photo_input" name="photo_input" placeholder="enter url">
+					</div>
+					<div class="form-group">
+						<label for="nationalitySelect">Nationality: </label>
+						<select class="form-control input-solid" id="nationalitySelect" name="nationalitySelect">
+							<?php foreach ($nationalities as $nationality): ?>
+								<option value="<?= htmlspecialchars($nationality) ?>"><?= htmlspecialchars($nationality) ?></option>
+							<?php endforeach; ?>
+						</select>
+					</div>	
+					<div class="form-group">
+						<label for="solidSelect">Club: </label>
+						<select class="form-control input-solid" id="clubSelect" name="clubSelect">
+							<?php foreach ($clubs as $club): ?>
+								<option value="<?= htmlspecialchars($club) ?>"><?= htmlspecialchars($club) ?></option>
+							<?php endforeach; ?>
+						</select>
+					</div>	
+					<div class="form-group">
+						<label for="rating_input">Rating: </label>
+						<input type="text" class="form-control input-square" id="rating_input" name="rating_input" placeholder="1 - 99">
+					</div>
+					<div class="form-group">
+						<label for="positionSelect">Position:</label>
+						<select class="form-control input-square" id="positionSelect" name="positionSelect">
+							<option value="ST">ST</option>
+							<option value="RW">RW</option>
+							<option value="LW">LW</option>	
+							<option value="CM">CM</option>
+							<option value="CB">CB</option>
+							<option value="LB">LB</option>
+							<option value="RB">RB</option>
+							<option value="GK">GK</option>
+						</select>
+					</div>
+					<div class="form-group row">
+						<div class="col-md-6">
+							<label for="pace_input">Pace: </label>
+							<input type="text" class="form-control form-control-sm" id="pace_input" name="pace_input" placeholder="enter rating">
+						</div>
+						<div class="col-md-6">
+							<label for="dribbling_input">Dribbling: </label>
+							<input type="text" class="form-control form-control-sm" id="dribbling_input" name="dribbling_input" placeholder="enter rating">
+						</div>
+					</div>
+					<div class="form-group row">
+						<div class="col-md-6">
+							<label for="passing_input">Passing: </label>
+							<input type="text" class="form-control form-control-sm" id="passing_input" name="passing_input" placeholder="enter rating">
+						</div>
+						<div class="col-md-6">
+							<label for="shooting_input">Shooting: </label>
+							<input type="text" class="form-control form-control-sm" id="shooting_input" name="shooting_input" placeholder="enter rating">
+						</div>
+					</div>
+					<div class="form-group row">
+						<div class="col-md-6">
+							<label for="defending_input">Defending: </label>
+							<input type="text" class="form-control form-control-sm" id="defending_input" name="defending_input" placeholder="enter rating">
+						</div>
+						<div class="col-md-6">
+							<label for="physical_input">Physical: </label>
+							<input type="text" class="form-control form-control-sm" id="physical_input" name="physical_input" placeholder="enter rating">
+						</div>
+					</div>
+
+					<div class="modal-footer">
+						<button type="submit" class="btn btn-success" >update</button>
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+<script>
+	$(document).ready(function() {
+    $('#modalUpdateplayer').on('show.bs.modal', function(event) {
+		console.log("salmaaa"); 
+        var button = $(event.relatedTarget); 
+        var playerId = button.data('id'); 
+        var name = button.data('name');  
+		console.log('Player Name:', name); 
+
+        $('#name_input').val(name);
+        $('#player_id_input').val(playerId);
+    });
+});
+
+
+</script>
 </body>
 <script src="assets/js/core/jquery.3.2.1.min.js"></script>
 <script src="assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
