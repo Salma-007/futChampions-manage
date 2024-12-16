@@ -1,15 +1,5 @@
+<?php include('dbcon.php') ?>
 <?php 
-
-$servername = "localhost"; 
-$username = "root"; 
-$password = ""; 
-$dbname = "fut_champions_db"; 
-
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
 
 if(isset($_GET['id_player'])){
     $id_player = $_GET['id_player'];
@@ -22,10 +12,10 @@ if(isset($_GET['id_player'])){
         die("query failed");
     }
     else{
-        header('Location: index.php?delete_msg=The player id deleted.');
+        header('Location: index.php?delete_msg=The player is deleted.');
     }
 
 }
-header('Location: index.php');
+// header('Location: index.php');
   
 ?>

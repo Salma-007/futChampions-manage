@@ -1,15 +1,5 @@
+<?php include('dbcon.php') ?>
 <?php
-
-	$servername = "localhost"; 
-	$username = "root"; 
-	$password = ""; 
-	$dbname = "fut_champions_db"; 
-
-	$conn = new mysqli($servername, $username, $password, $dbname);
-
-	if ($conn->connect_error) {
-	    die("Connection failed: " . $conn->connect_error);
-	}
 
     // Get the form data from POST
     $name = $_POST['name_input'];
@@ -33,7 +23,7 @@
     $stmt->bind_result($nationality_id);
     $stmt->fetch();
     $stmt->close();
-    
+
     // fetch club id 
     $club_id_query = "SELECT id_club FROM clubs WHERE name = ?";
     $stmt = $conn->prepare($club_id_query);

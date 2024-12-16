@@ -16,17 +16,8 @@
 				<a href="index.html" class="logo">
 					FUT Champions
 				</a>
+				<?php include('dbcon.php') ?>
 				<?php
-					$servername = "localhost"; 
-					$username = "root"; 
-					$password = ""; 
-					$dbname = "fut_champions_db"; 
-
-					$conn = new mysqli($servername, $username, $password, $dbname);
-
-					if ($conn->connect_error) {
-					    die("Connection failed: " . $conn->connect_error);
-					}
 
 					// echo "Connected successfully";
 					$sql = "SELECT name FROM nationalities"; 
