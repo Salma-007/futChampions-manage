@@ -343,7 +343,7 @@
 							<input type="text" class="form-control input-solid" id="clubSelect" name="clubSelect" placeholder="enter club">
 						</div>
 						<div class="col-md-6">
-							<label for="logo_club">logo: </label>
+							<label for="dribbling_input">logo: </label>
 							<input type="file" id="logo_club" accept="image/*" class="form-control input-square" name="logo_club">
 						</div>
 					</div>
