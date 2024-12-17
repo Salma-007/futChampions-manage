@@ -11,7 +11,7 @@ if(isset($_GET['id_player'])){
 
     $row = $result_normal->fetch_assoc();
     $idStats = $row['id_normal_player'];
-    echo  $idStats;
+    // echo  $idStats;
     
     $query = "delete from `players` where `id_player` = '$id_player'";
     $queryclub = "delete from `normal_players` where `id_normal_player` = '$idStats'";
