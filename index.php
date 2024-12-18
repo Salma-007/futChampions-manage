@@ -13,7 +13,7 @@
 	<div class="wrapper">
 		<div class="main-header">
 			<div class="logo-header">
-				<a href="index.html" class="logo">
+				<a href="index.php" class="logo">
 					FUT Champions
 				</a>
 				<?php include('dbcon.php') ?>
@@ -151,83 +151,7 @@
 									</div>
 								</div>
 							</div>
-<!-- 							<div class="col-md-3">
-								<div class="card card-stats">
-									<div class="card-body ">
-										<div class="row">
-											<div class="col-5">
-												<div class="icon-big text-center icon-warning">
-													<i class="la la-pie-chart text-warning"></i>
-												</div>
-											</div>
-											<div class="col-7 d-flex align-items-center">
-												<div class="numbers">
-													<p class="card-category">Number</p>
-													<h4 class="card-title">150GB</h4>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="col-md-3">
-								<div class="card card-stats">
-									<div class="card-body ">
-										<div class="row">
-											<div class="col-5">
-												<div class="icon-big text-center">
-													<i class="la la-bar-chart text-success"></i>
-												</div>
-											</div>
-											<div class="col-7 d-flex align-items-center">
-												<div class="numbers">
-													<p class="card-category">Revenue</p>
-													<h4 class="card-title">$ 1,345</h4>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="col-md-3">
-								<div class="card card-stats">
-									<div class="card-body">
-										<div class="row">
-											<div class="col-5">
-												<div class="icon-big text-center">
-													<i class="la la-times-circle-o text-danger"></i>
-												</div>
-											</div>
-											<div class="col-7 d-flex align-items-center">
-												<div class="numbers">
-													<p class="card-category">Errors</p>
-													<h4 class="card-title">23</h4>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="col-md-3">
-								<div class="card card-stats">
-									<div class="card-body">
-										<div class="row">
-											<div class="col-5">
-												<div class="icon-big text-center">
-													<i class="la la-heart-o text-primary"></i>
-												</div>
-											</div>
-											<div class="col-7 d-flex align-items-center">
-												<div class="numbers">
-													<p class="card-category">Followers</p>
-													<h4 class="card-title">+45K</h4>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div> -->
-						</div>
+
 						<?php 
 						if(isset($_GET['delete_msg'])){
 							echo"<h6>".$_GET['delete_msg']."</h6>";
@@ -256,12 +180,16 @@
 										</tr>
 									</thead>
 									<?php 
+
+										// $requete_check="select id_goalkeeper from players";
 										$sql = "SELECT p.id_player, p.name_player, n.name AS nationality, c.name AS club, p.rating, p.position,
-												r.pace, r.dribbling, r.passing, r.shooting, r.defending, r.physical
-										FROM players p
-										JOIN nationalities n ON p.id_nationality = n.id_nationality
-										JOIN clubs c ON p.id_club = c.id_club
-										JOIN normal_players r ON p.id_normal_player = r.id_normal_player";
+												r.pace, r.dribbling, r.passing, r.shooting, r.defending, r.physical, 
+												g.id_goalkeeper, g.diving, g.handling, g.kicking, g.reflexes, g.speed, g.positioning
+												FROM players p
+												JOIN nationalities n ON p.id_nationality = n.id_nationality
+												JOIN clubs c ON p.id_club = c.id_club
+												LEFT JOIN normal_players r ON p.id_normal_player = r.id_normal_player
+												LEFT JOIN goalkeepers g ON p.id_goalkeeper = g.id_goalkeeper";
 
 										// Check the database connection
 										if ($conn->connect_error) {
@@ -279,12 +207,22 @@
 													echo '<td>' . $row['club'] . '</td>';
 													echo '<td>' . $row['rating'] . '</td>';
 													echo '<td>' . $row['position'] . '</td>';
-													echo '<td>' . $row['pace'] . '</td>';
-													echo '<td>' . $row['dribbling'] . '</td>';
-													echo '<td>' . $row['passing'] . '</td>';
-													echo '<td>' . $row['shooting'] . '</td>';
-													echo '<td>' . $row['defending'] . '</td>';
-													echo '<td>' . $row['physical'] . '</td>';
+													if (isset($row['id_goalkeeper']) && $row['id_goalkeeper'] !== NULL) {
+														echo '<td>' . $row['diving'] . '</td>';
+														echo '<td>' . $row['handling'] . '</td>';
+														echo '<td>' . $row['kicking'] . '</td>';
+														echo '<td>' . $row['reflexes'] . '</td>';
+														echo '<td>' . $row['speed'] . '</td>';
+														echo '<td>' . $row['positioning'] . '</td>';
+													} else {
+														// Sinon, ce n'est pas un gardien, on affiche les stats des joueurs normaux
+														echo '<td>' . $row['pace'] . '</td>';
+														echo '<td>' . $row['dribbling'] . '</td>';
+														echo '<td>' . $row['passing'] . '</td>';
+														echo '<td>' . $row['shooting'] . '</td>';
+														echo '<td>' . $row['defending'] . '</td>';
+														echo '<td>' . $row['physical'] . '</td>';
+													}
 													echo '<td><a href="update.php?id_player=' . urlencode($row['id_player']) . '" class="btn btn-primary" >update</a></td>';
 													echo '<td><a href="delete_player.php?id_player=' . urlencode($row['id_player']) . '" class="btn btn-danger">delete</a></td>';
 

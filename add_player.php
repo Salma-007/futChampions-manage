@@ -60,26 +60,51 @@
     }
 
 
-    // inserting the statistics 
-    $insert_stats_query = "INSERT INTO normal_players (pace, shooting, passing, dribbling, defending, physical) 
-    VALUES (?, ?, ?, ?, ?, ?)";
-    $stmt = $conn->prepare($insert_stats_query);
-    $stmt->bind_param("iiiiii", $pace, $shooting, $passing, $dribbling, $defending, $physical);
+    if($position=='GK'){
+            // inserting the statistics 
+            $insert_stats_query_gk = "INSERT INTO goalkeepers (diving, handling, kicking, reflexes, speed, positioning) 
+            VALUES (?, ?, ?, ?, ?, ?)";
+            $stmt = $conn->prepare($insert_stats_query_gk);
+            $stmt->bind_param("iiiiii", $pace, $shooting, $passing, $dribbling, $defending, $physical);
 
-    if ($stmt->execute()) {
+            if ($stmt->execute()) {
 
-    $normal_player_id = $stmt->insert_id;
-    } else {
-    echo "Error inserting player statistics: " . $stmt->error;
-    exit;
+            $goalkeeper_id = $stmt->insert_id;
+            } else {
+            echo "Error inserting player statistics: " . $stmt->error;
+            exit;
+            }
+            $stmt->close();
+            
+            // insertion du joueur
+            $insert_player_query = "INSERT INTO players (name_player, photo, id_nationality, id_club, rating, position, id_goalkeeper) 
+            VALUES (?, ?, ?, ?, ?, ?, ?)";
+            $stmt = $conn->prepare($insert_player_query);
+            $stmt->bind_param("ssiiiss", $name, $photo, $nationality_id, $club_id, $rating, $position, $goalkeeper_id);
+
     }
-    $stmt->close();
-    
-    // insertion du joueur
-    $insert_player_query = "INSERT INTO players (name_player, photo, id_nationality, id_club, rating, position, id_normal_player) 
-    VALUES (?, ?, ?, ?, ?, ?, ?)";
-    $stmt = $conn->prepare($insert_player_query);
-    $stmt->bind_param("ssiiiss", $name, $photo, $nationality_id, $club_id, $rating, $position, $normal_player_id);
+    else{
+            // inserting the statistics 
+            $insert_stats_query = "INSERT INTO normal_players (pace, shooting, passing, dribbling, defending, physical) 
+            VALUES (?, ?, ?, ?, ?, ?)";
+            $stmt = $conn->prepare($insert_stats_query);
+            $stmt->bind_param("iiiiii", $pace, $shooting, $passing, $dribbling, $defending, $physical);
+
+            if ($stmt->execute()) {
+
+            $normal_player_id = $stmt->insert_id;
+            } else {
+            echo "Error inserting player statistics: " . $stmt->error;
+            exit;
+            }
+            $stmt->close();
+            
+            // insertion du joueur
+            $insert_player_query = "INSERT INTO players (name_player, photo, id_nationality, id_club, rating, position, id_normal_player) 
+            VALUES (?, ?, ?, ?, ?, ?, ?)";
+            $stmt = $conn->prepare($insert_player_query);
+            $stmt->bind_param("ssiiiss", $name, $photo, $nationality_id, $club_id, $rating, $position, $normal_player_id);
+    }
 
     if ($stmt->execute()) {
         header("Location: index.php");

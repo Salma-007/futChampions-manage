@@ -74,10 +74,23 @@
                                 $query = "select * from players where id_player = '$id_player'" ;
                                 $result = $conn->query($query);
                                 $row = $result->fetch_assoc();
-                                // fetch le club
-                                $queryclub = "select id_club from players where id_player = '$id_player'";
+                                // fetch statistics
+                                $statistics = $row['id_normal_player'];
+                                $queryclub = "select * from normal_players where id_normal_player = '$statistics'";
                                 $resultclub = $conn->query($queryclub);
+                                $rowstates = $resultclub->fetch_assoc();
 
+                                // fetch statistics goalkeeper
+                                $statistics_goalkeeper = $row['id_goalkeeper'];
+                                $query_goalkeeper = "select * from goalkeepers where id_goalkeeper = '$statistics_goalkeeper'";
+                                $resultgoalkeeper = $conn->query($query_goalkeeper);
+                                $rowstates_goalkeeper = $resultgoalkeeper->fetch_assoc();
+
+                                //fetch club
+                                $clubsid = $row['id_club'];
+                                $queryidclub = "select * from clubs where id_club = '$clubsid'";
+                                $resultatclub = $conn->query($queryidclub);
+                                $rowclub = $resultatclub->fetch_assoc();
 
                             }
                         ?>
@@ -91,7 +104,7 @@
                             <form action="" method="POST" enctype="multipart/form-data">
                                 <div class="form-group">
                                     <label for="name_input">Name: </label>
-                                    <input type="text" class="form-control input-square" id="name_input" name="name_input" placeholder="enter name" value=<?php echo $row['name_player'] ?>>
+                                    <input type="text" class="form-control input-square" id="name_input" name="name_input" placeholder="enter name" value='<?php echo $row['name_player'] ?>' >
                                 </div>
                                 <div class="form-group">
                                     <label for="photo_input">Photo: </label>
@@ -108,11 +121,11 @@
                                 <div class="form-group row">
                                     <div class="col-md-6">
                                         <label for="pace_input">Club: </label>
-                                        <input type="text" class="form-control input-solid" id="clubSelect" name="clubSelect" placeholder="enter club">
+                                        <input type="text" class="form-control input-solid" id="clubSelect" name="clubSelect" placeholder="enter club" value='<?php echo $rowclub['name'] ?>'>
                                     </div>
                                     <div class="col-md-6">
                                         <label for="dribbling_input">logo: </label>
-                                        <input type="file" id="logo_club" accept="image/*" class="form-control input-square" name="logo_club">
+                                        <input type="file" id="logo_club" value='<?php echo $rowclub['logo'] ?>' accept="image/*" class="form-control input-square" name="logo_club">
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -132,36 +145,83 @@
                                         <option value="GK">GK</option>
                                     </select>
                                 </div>
-                                <div class="form-group row">
-                                    <div class="col-md-6">
-                                        <label for="pace_input">Pace: </label>
-                                        <input type="text" class="form-control form-control-sm" id="pace_input" name="pace_input" placeholder="enter rating">
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label for="dribbling_input">Dribbling: </label>
-                                        <input type="text" class="form-control form-control-sm" id="dribbling_input" name="dribbling_input" placeholder="enter rating">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <div class="col-md-6">
-                                        <label for="passing_input">Passing: </label>
-                                        <input type="text" class="form-control form-control-sm" id="passing_input" name="passing_input" placeholder="enter rating">
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label for="shooting_input">Shooting: </label>
-                                        <input type="text" class="form-control form-control-sm" id="shooting_input" name="shooting_input" placeholder="enter rating">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <div class="col-md-6">
-                                        <label for="defending_input">Defending: </label>
-                                        <input type="text" class="form-control form-control-sm" id="defending_input" name="defending_input" placeholder="enter rating">
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label for="physical_input">Physical: </label>
-                                        <input type="text" class="form-control form-control-sm" id="physical_input" name="physical_input" placeholder="enter rating">
-                                    </div>
-                                </div>
+                                <?php 
+                                    if ($row['position'] == 'GK') {
+                                        echo '<div class="form-group row">';
+                                        echo '<div class="col-md-6">';
+                                        echo '<label for="pace_input">Diving: </label>';
+                                        echo '<input type="text" class="form-control form-control-sm" id="pace_input" name="pace_input" placeholder="enter rating" value="' . $rowstates_goalkeeper['diving'] . '">';
+                                        echo '</div>';
+
+                                        echo '<div class="col-md-6">';
+                                        echo '<label for="dribbling_input">Handling: </label>';
+                                        echo '<input type="text" class="form-control form-control-sm" id="dribbling_input" name="dribbling_input" placeholder="enter rating" value="' . $rowstates_goalkeeper['handling'] . '">';
+                                        echo '</div>';
+                                        echo '</div>';
+
+                                        echo '<div class="form-group row">';
+                                        echo '<div class="col-md-6">';
+                                        echo '<label for="passing_input">Kicking: </label>';
+                                        echo '<input type="text" class="form-control form-control-sm" id="passing_input" name="passing_input" placeholder="enter rating" value="' . $rowstates_goalkeeper['kicking'] . '">';
+                                        echo '</div>';
+
+                                        echo '<div class="col-md-6">';
+                                        echo '<label for="shooting_input">Reflexes: </label>';
+                                        echo '<input type="text" class="form-control form-control-sm" id="shooting_input" name="shooting_input" placeholder="enter rating" value="' . $rowstates_goalkeeper['reflexes'] . '">';
+                                        echo '</div>';
+                                        echo '</div>';
+
+                                        echo '<div class="form-group row">';
+                                        echo '<div class="col-md-6">';
+                                        echo '<label for="defending_input">Speed: </label>';
+                                        echo '<input type="text" class="form-control form-control-sm" id="defending_input" name="defending_input" placeholder="enter rating" value="' . $rowstates_goalkeeper['speed'] . '">';
+                                        echo '</div>';
+
+                                        echo '<div class="col-md-6">';
+                                        echo '<label for="physical_input">Positioning: </label>';
+                                        echo '<input type="text" class="form-control form-control-sm" id="physical_input" name="physical_input" placeholder="enter rating" value="' . $rowstates_goalkeeper['positioning'] . '">';
+                                        echo '</div>';
+                                        echo '</div>';
+                                    } 
+                                    else {
+                                        echo '<div class="form-group row">';
+                                        echo '<div class="col-md-6">';
+                                        echo '<label for="pace_input">Pace: </label>';
+                                        echo '<input type="text" class="form-control form-control-sm" id="pace_input" name="pace_input" placeholder="enter rating" value="' . $rowstates['pace'] . '">';
+                                        echo '</div>';
+
+                                        echo '<div class="col-md-6">';
+                                        echo '<label for="dribbling_input">Dribbling: </label>';
+                                        echo '<input type="text" class="form-control form-control-sm" id="dribbling_input" name="dribbling_input" placeholder="enter rating" value="' . $rowstates['dribbling'] . '">';
+                                        echo '</div>';
+                                        echo '</div>';
+
+                                        echo '<div class="form-group row">';
+                                        echo '<div class="col-md-6">';
+                                        echo '<label for="passing_input">Passing: </label>';
+                                        echo '<input type="text" class="form-control form-control-sm" id="passing_input" name="passing_input" placeholder="enter rating" value="' . $rowstates['passing'] . '">';
+                                        echo '</div>';
+
+                                        echo '<div class="col-md-6">';
+                                        echo '<label for="shooting_input">Shooting: </label>';
+                                        echo '<input type="text" class="form-control form-control-sm" id="shooting_input" name="shooting_input" placeholder="enter rating" value="' . $rowstates['shooting'] . '">';
+                                        echo '</div>';
+                                        echo '</div>';
+
+                                        echo '<div class="form-group row">';
+                                        echo '<div class="col-md-6">';
+                                        echo '<label for="defending_input">Defending: </label>';
+                                        echo '<input type="text" class="form-control form-control-sm" id="defending_input" name="defending_input" placeholder="enter rating" value="' . $rowstates['defending'] . '">';
+                                        echo '</div>';
+
+                                        echo '<div class="col-md-6">';
+                                        echo '<label for="physical_input">Physical: </label>';
+                                        echo '<input type="text" class="form-control form-control-sm" id="physical_input" name="physical_input" placeholder="enter rating" value="' . $rowstates['physical'] . '">';
+                                        echo '</div>';
+                                        echo '</div>';
+                                    }
+                                ?>
+
 
                                 <div class="modal-footer">
                                     <button type="submit" class="btn btn-success" >update</button>
