@@ -33,6 +33,13 @@
     					echo "No nationalities found.";
 					}
 
+					//fetch le nombre of players
+					$sql_count = "select count(*), max(rating) from players;";
+					$rersult_count = $conn->query($sql_count);
+					$row = $rersult_count->fetch_row(); // Récupère la première ligne du résultat
+    				$num_players = $row[0]; 
+					$max_rating = $row[1];
+
 
 					// $conn->close();
 				?>
@@ -86,8 +93,8 @@
 											</div>
 											<div class="col-7 d-flex align-items-center">
 												<div class="numbers">
-													<p class="card-category">Visitors</p>
-													<h4 class="card-title">1,294</h4>
+													<p class="card-category">Players</p>
+													<h4 class="card-title"><?php echo (int)$num_players;?></h4>
 												</div>
 											</div>
 										</div>
@@ -105,8 +112,8 @@
 											</div>
 											<div class="col-7 d-flex align-items-center">
 												<div class="numbers">
-													<p class="card-category">Sales</p>
-													<h4 class="card-title">$ 1,345</h4>
+													<p class="card-category">Top Rating</p>
+													<h4 class="card-title"><?php echo (int)$max_rating;?></h4>
 												</div>
 											</div>
 										</div>
@@ -215,7 +222,7 @@
 														echo '<td>' . $row['speed'] . '</td>';
 														echo '<td>' . $row['positioning'] . '</td>';
 													} else {
-														// Sinon, ce n'est pas un gardien, on affiche les stats des joueurs normaux
+														// qsi ce n'est pas un gardien, on affiche les stats des joueurs normaux
 														echo '<td>' . $row['pace'] . '</td>';
 														echo '<td>' . $row['dribbling'] . '</td>';
 														echo '<td>' . $row['passing'] . '</td>';
