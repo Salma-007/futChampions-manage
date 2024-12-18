@@ -202,13 +202,13 @@
 										if ($conn->connect_error) {
 											die("Connection failed: " . $conn->connect_error);
 										}
-
+										$count = 1;
 										if ($result = $conn->query($sql)) {
 											if ($result->num_rows > 0) {
 												echo '<tbody>';
 												while ($row = $result->fetch_assoc()) {
 													echo '<tr>';
-													echo '<td>' . $row['id_player'] . '</td>';
+													echo '<td>' . $count++ . '</td>';
 													echo '<td>' . $row['name_player'] . '</td>';
 													echo '<td>' . $row['nationality'] . '</td>';
 													echo '<td>' . $row['club'] . '</td>';

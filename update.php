@@ -150,7 +150,7 @@
 
                                 
                                 // update des statistiques depend de position
-                                if($position=='GK'){
+                                if($position =='GK'){
                                     $query_id_goalkeeper = "select id_goalkeeper from players where id_player = $id_player";
                                     $resultat_id_goalkeeper = $conn->query($query_id_goalkeeper);
                                     $row_goalkeeper = $resultat_id_goalkeeper->fetch_assoc();
@@ -158,7 +158,7 @@
 
                                     $insert_stats_query_gk = "update goalkeepers set diving=?, handling=?, kicking=?, reflexes=?, speed=?, positioning=? where id_goalkeeper=?";
                                     $stmt = $conn->prepare($insert_stats_query_gk);
-                                    $stmt->bind_param("iiiiiii", $pace, $shooting, $passing, $dribbling, $defending, $physical,$resultat_id_goalkeeper);
+                                    $stmt->bind_param("iiiiiii", $pace, $shooting, $passing, $dribbling, $defending, $physical,$id_goalkeeper);
                                     $stmt->execute();
                         
                                     // if (!$stmt->execute()) {
@@ -169,6 +169,22 @@
                                     $stmt->close();
                                 }
                                 else{
+                                    $query_id_normal = "select id_normal_player from players where id_player = $id_player";
+                                    $resultat_id_normal = $conn->query($query_id_normal);
+                                    $row_normal = $resultat_id_normal->fetch_assoc();
+                                    $id_normal_player = $row_normal['id_normal_player'];
+
+                                    $insert_stats_query_normal = "update normal_players set pace=?, shooting=?, passing=?, dribbling=?, defending=?, defending=? where id_normal_player=?";
+                                    $stmt = $conn->prepare($insert_stats_query_normal);
+                                    $stmt->bind_param("iiiiiii", $pace, $shooting, $passing, $dribbling, $defending, $physical,$id_normal_player);
+                                    $stmt->execute();
+                        
+                                    // if (!$stmt->execute()) {
+                                    //     echo "Error inserting player statistics: " . $stmt->error;
+                                    //     exit;
+                                
+                                    // }
+                                    $stmt->close();
 
                                 }
                                 
@@ -182,6 +198,7 @@
                                 } else {
                                 echo "Error updating name: " . $stmt->error;
                                 }
+                                header("Location: index.php");
                             }
                         ?>
 
