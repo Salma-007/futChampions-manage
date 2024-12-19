@@ -34,6 +34,19 @@
     					echo "No nationalities found.";
 					}
 
+                    // Store the club names in an array
+					$sql = "SELECT name FROM clubs"; 
+					$result = $conn->query($sql);
+
+					
+					$clubs = [];
+					if ($result->num_rows > 0) {					
+    					while ($row = $result->fetch_assoc()) {
+        					$clubs[] = $row['name'];
+    					}
+					} else {					
+    					echo "No clubs found.";
+					}
 
 					// $conn->close();
 				?>
@@ -118,33 +131,22 @@
                                 $defending = $_POST['defending_input'];
                                 $physical = $_POST['physical_input'];
 
-                                // check if the club already exists
-                                $checkQuery = "SELECT id_club FROM clubs WHERE name = ?";
-                                $stmt = mysqli_prepare($conn, $checkQuery);
-                                mysqli_stmt_bind_param($stmt, "s", $clubName);  
-                                mysqli_stmt_execute($stmt);
-                                mysqli_stmt_store_result($stmt);
 
-                                if (mysqli_stmt_num_rows($stmt) > 0) {
-                                    mysqli_stmt_bind_result($stmt, $club_id);
-                                    mysqli_stmt_fetch($stmt);
-                                } 
-                                else{
-                                    // ajout du club s'il n'existe pas
-                                    $insertQuery = "update clubs set name=?, logo=? ";
-                                    $insertStmt = mysqli_prepare($conn, $insertQuery);
-                                    mysqli_stmt_bind_param($insertStmt, "ss", $clubName, $logo_club);
-                                    mysqli_stmt_execute($insertStmt);
-
-                                    // Fetch the inserted club's ID
-                                    $club_id = mysqli_insert_id($conn);
-                                }
                                 // fetch nationality id 
                                 $nationality_id_query = "SELECT id_nationality FROM nationalities WHERE name = ?";
                                 $stmt = $conn->prepare($nationality_id_query);
                                 $stmt->bind_param("s", $nationality);
                                 $stmt->execute();
                                 $stmt->bind_result($nationality_id);
+                                $stmt->fetch();
+                                $stmt->close();
+
+                                // fetch nationality id 
+                                $club_id_query = "SELECT id_club FROM clubs WHERE name = ?";
+                                $stmt = $conn->prepare($club_id_query);
+                                $stmt->bind_param("s", $clubName);
+                                $stmt->execute();
+                                $stmt->bind_result($club_id);
                                 $stmt->fetch();
                                 $stmt->close();
 
@@ -174,7 +176,7 @@
                                     $row_normal = $resultat_id_normal->fetch_assoc();
                                     $id_normal_player = $row_normal['id_normal_player'];
 
-                                    $insert_stats_query_normal = "update normal_players set pace=?, shooting=?, passing=?, dribbling=?, defending=?, defending=? where id_normal_player=?";
+                                    $insert_stats_query_normal = "update normal_players set pace=?, shooting=?, passing=?, dribbling=?, defending=?, physical=? where id_normal_player=?";
                                     $stmt = $conn->prepare($insert_stats_query_normal);
                                     $stmt->bind_param("iiiiiii", $pace, $shooting, $passing, $dribbling, $defending, $physical,$id_normal_player);
                                     $stmt->execute();
@@ -234,16 +236,14 @@
                                         <?php endforeach; ?>
                                     </select>
                                 </div>	
-                                <div class="form-group row">
-                                    <div class="col-md-6">
-                                        <label for="clubSelect">Club: </label>
-                                        <input type="text" class="form-control input-solid" id="clubSelect" name="clubSelect" placeholder="enter club" value='<?php echo $rowclub['name'] ?>'>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label for="logo_club">logo: </label>
-                                        <input type="file" id="logo_club" value='<?php echo $rowclub['logo'] ?>' accept="image/*" class="form-control input-square" name="logo_club">
-                                    </div>
-                                </div>
+                                <div class="form-group">
+                                    <label for="clubSelect">Club: </label>
+                                    <select class="form-control input-solid" id="clubSelect" name="clubSelect">
+                                        <?php foreach ($clubs as $club): ?>
+                                            <option value="<?= htmlspecialchars($club) ?>"><?= htmlspecialchars($club) ?></option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </div>	
                                 <div class="form-group">
                                     <label for="rating_input">Rating: </label>
                                     <input type="text" class="form-control input-square" id="rating_input" name="rating_input" placeholder="1 - 99" value=<?php echo $row['rating'] ?>>
