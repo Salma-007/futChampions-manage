@@ -40,13 +40,17 @@
     				$num_players = $row[0]; 
 					$max_rating = $row[1];
 
+					//fetch le nombre of goalkeepers
+					$sql_count_goalkeeper = "select count(*) from players where id_goalkeeper<>0;";
+					$rersult_count_gk = $conn->query($sql_count_goalkeeper);
+					$rowgk = $rersult_count_gk->fetch_row(); 
+    				$num_goalkeepers = $rowgk[0]; 
+
 					//select the name of the top striker
 					$sql_top_striker = "select name_player from players where rating = (select max(rating) from players);";
 					$resltat_top_striker = $conn->query($sql_top_striker);
 					$row_top_striker = $resltat_top_striker->fetch_row();
 					$top_striker = $row_top_striker[0];
-
-
 
 					// $conn->close();
 				?>
@@ -152,13 +156,13 @@
 										<div class="row">
 											<div class="col-5">
 												<div class="icon-big text-center">
-													<i class="la la-check-circle"></i>
+													<i class="la la-road"></i>
 												</div>
 											</div>
 											<div class="col-7 d-flex align-items-center">
 												<div class="numbers">
-													<p class="card-category">Order</p>
-													<h4 class="card-title">576</h4>
+													<p class="card-category">Goalkeepers</p>
+													<h4 class="card-title"><?php echo $num_goalkeepers;?></h4>
 												</div>
 											</div>
 										</div>
@@ -237,7 +241,7 @@
 														echo '<td>' . $row['physical'] . '</td>';
 													}
 													echo '<td><a href="update.php?id_player=' . urlencode($row['id_player']) . '" class="btn btn-primary" >update</a></td>';
-													echo '<td><a href="delete_player.php?id_player=' . urlencode($row['id_player']) . '" class="btn btn-danger">delete</a></td>';
+													echo '<td><a href="delete_player.php?id_player=' . urlencode($row['id_player']) . '" class="btn btn-danger" onclick="return confirm(\"Do you really want to delete this player?\")">delete</a></td>';
 
 													echo '</tr>';
 												}
@@ -355,10 +359,7 @@
 		</div>
 	</div>
 
-
-
-
-</script>
+	<script src="./assets/js/script.js"></script>
 </body>
 <script src="assets/js/core/jquery.3.2.1.min.js"></script>
 <script src="assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
