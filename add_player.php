@@ -1,8 +1,9 @@
 <?php include('dbcon.php') ?>
+<?php require_once '../futChampions/includes/utils.php'; ?>
 <?php
 
     // Get the form data from POST
-    $name = $_POST['name_input'];
+    $name = validate_input($_POST['name_input'],'string');
     $nationality = $_POST['nationalitySelect'];
     $clubName = $_POST['clubSelect']; 
 
@@ -76,7 +77,7 @@
             }
             $stmt->close();
             
-            // insertion du joueur
+            // insertion du gardien
             $insert_player_query = "INSERT INTO players (name_player, photo, id_nationality, id_club, rating, position, id_goalkeeper) 
             VALUES (?, ?, ?, ?, ?, ?, ?)";
             $stmt = $conn->prepare($insert_player_query);

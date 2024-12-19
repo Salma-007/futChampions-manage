@@ -86,6 +86,7 @@
                         <?php 
                             if(!empty($_GET['id_player'])){
                                 $id_player = $_GET['id_player'];
+
                                 //fetch les infos du club
                                 $query = "select * from players where id_player = '$id_player'" ;
                                 $result = $conn->query($query);
@@ -101,8 +102,6 @@
                                 $query_goalkeeper = "select * from goalkeepers where id_goalkeeper = '$statistics_goalkeeper'";
                                 $resultgoalkeeper = $conn->query($query_goalkeeper);
                                 $rowstates_goalkeeper = $resultgoalkeeper->fetch_assoc();
-
-                                
 
                                 //fetch club
                                 $clubsid = $row['id_club'];
@@ -131,6 +130,30 @@
                                 $defending = $_POST['defending_input'];
                                 $physical = $_POST['physical_input'];
 
+                                // check if the photo is uploaded
+                                if ($_FILES["photo_input"]["size"] > 0 ) {
+                                    $photo = $_FILES['photo_input']['name'];
+                                    $photo_tmp = $_FILES['photo_input']['tmp_name'];
+                                    $photo_folder = 'uploads/photos/' . $photo; 
+                                    move_uploaded_file($photo_tmp, $photo_folder);
+                                    $sql_photo = "UPDATE players SET photo = ? WHERE id_player = ?";
+                                    $stmt = $conn->prepare($sql_photo);                            
+                                    if ($stmt === false) {
+                                        echo "Error preparing the SQL statement: " . $conn->error;
+                                        exit;
+                                    }
+                                    $stmt->bind_param("si", $photo, $id_player); 
+                                    if ($stmt->execute()) {
+                                        echo "Photo updated successfully.";
+                                    } else {
+                                        echo "Error executing SQL query: " . $stmt->error;
+                                    }                            
+                                    $stmt->close();
+                                }
+                                else {
+                                    echo "No file uploaded or the file is empty.";
+                                }
+                                                                
 
                                 // fetch nationality id 
                                 $nationality_id_query = "SELECT id_nationality FROM nationalities WHERE name = ?";

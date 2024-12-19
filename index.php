@@ -36,9 +36,16 @@
 					//fetch le nombre of players
 					$sql_count = "select count(*), max(rating) from players;";
 					$rersult_count = $conn->query($sql_count);
-					$row = $rersult_count->fetch_row(); // Récupère la première ligne du résultat
+					$row = $rersult_count->fetch_row(); 
     				$num_players = $row[0]; 
 					$max_rating = $row[1];
+
+					//select the name of the top striker
+					$sql_top_striker = "select name_player from players where rating = (select max(rating) from players);";
+					$resltat_top_striker = $conn->query($sql_top_striker);
+					$row_top_striker = $resltat_top_striker->fetch_row();
+					$top_striker = $row_top_striker[0];
+
 
 
 					// $conn->close();
@@ -126,13 +133,13 @@
 										<div class="row">
 											<div class="col-5">
 												<div class="icon-big text-center">
-													<i class="la la-newspaper-o"></i>
+													<i class="la la-arrow-up"></i>
 												</div>
 											</div>
 											<div class="col-7 d-flex align-items-center">
 												<div class="numbers">
-													<p class="card-category">Subscribers</p>
-													<h4 class="card-title">1303</h4>
+													<p class="card-category">Top Striker</p>
+													<h4 class="card-title"><?php echo $top_striker;?></h4>
 												</div>
 											</div>
 										</div>
@@ -187,7 +194,6 @@
 										</tr>
 									</thead>
 									<?php 
-
 										// $requete_check="select id_goalkeeper from players";
 										$sql = "SELECT p.id_player, p.name_player, n.name AS nationality, c.name AS club, p.rating, p.position,
 												r.pace, r.dribbling, r.passing, r.shooting, r.defending, r.physical, 
