@@ -359,7 +359,7 @@
 		</div>
 	</div>
 
-	<script src="./assets/js/script.js"></script>
+	<script src="./assets/js/script.js?v=<?php echo time(); ?>"></script>
 </body>
 <script src="assets/js/core/jquery.3.2.1.min.js"></script>
 <script src="assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
