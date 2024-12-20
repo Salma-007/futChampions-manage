@@ -14,7 +14,7 @@
 	<div class="wrapper">
 		<div class="main-header">
 			<div class="logo-header">
-				<a href="index.html" class="logo">
+				<a href="index.php" class="logo">
 					FUT Champions
 				</a>
 				<?php include('dbcon.php') ?>
@@ -105,9 +105,19 @@
 
                                 //fetch club
                                 $clubsid = $row['id_club'];
-                                $queryidclub = "select * from clubs where id_club = '$clubsid'";
+                                $queryidclub = "select name from clubs where id_club = $clubsid";
                                 $resultatclub = $conn->query($queryidclub);
                                 $rowclub = $resultatclub->fetch_assoc();
+
+                                //fetch club
+                                $nationalid = $row['id_nationality'];
+                                $queryidnatio = "select name from nationalities where id_nationality = $nationalid";
+                                $resultatnation = $conn->query($queryidnatio);
+                                $rownationality = $resultatnation->fetch_assoc();
+
+                                // print_r ($rownationality);
+
+                                
 
                             }
                         ?>
@@ -154,7 +164,6 @@
                                     echo "No file uploaded or the file is empty.";
                                 }
                                                                 
-
                                 // fetch nationality id 
                                 $nationality_id_query = "SELECT id_nationality FROM nationalities WHERE name = ?";
                                 $stmt = $conn->prepare($nationality_id_query);
@@ -164,7 +173,7 @@
                                 $stmt->fetch();
                                 $stmt->close();
 
-                                // fetch nationality id 
+                                // fetch club id 
                                 $club_id_query = "SELECT id_club FROM clubs WHERE name = ?";
                                 $stmt = $conn->prepare($club_id_query);
                                 $stmt->bind_param("s", $clubName);
@@ -255,7 +264,11 @@
                                     <label for="nationalitySelect">Nationality: </label>
                                     <select class="form-control input-solid" id="nationalitySelect" name="nationalitySelect">
                                         <?php foreach ($nationalities as $nationality): ?>
-                                            <option value="<?= htmlspecialchars($nationality) ?>"><?= htmlspecialchars($nationality) ?></option>
+                                            <?php if ($nationality == $rownationality['name']) { ?>
+                                                <option value="<?= htmlspecialchars($nationality) ?>" selected><?= htmlspecialchars($nationality) ?></option>
+                                            <?php } else { ?>
+                                                <option value="<?= htmlspecialchars($nationality) ?>"><?= htmlspecialchars($nationality) ?></option>
+                                            <?php } ?>
                                         <?php endforeach; ?>
                                     </select>
                                 </div>	
@@ -263,9 +276,14 @@
                                     <label for="clubSelect">Club: </label>
                                     <select class="form-control input-solid" id="clubSelect" name="clubSelect">
                                         <?php foreach ($clubs as $club): ?>
-                                            <option value="<?= htmlspecialchars($club) ?>"><?= htmlspecialchars($club) ?></option>
+                                            <?php if ($club == $rowclub['name']) { ?>
+                                                <option value="<?= htmlspecialchars($club) ?>" selected><?= htmlspecialchars($club) ?></option>
+                                            <?php } else { ?>
+                                                <option value="<?= htmlspecialchars($club) ?>"><?= htmlspecialchars($club) ?></option>
+                                            <?php } ?>
                                         <?php endforeach; ?>
                                     </select>
+
                                 </div>	
                                 <div class="form-group">
                                     <label for="rating_input">Rating: </label>
@@ -376,7 +394,8 @@
 		</div>
 	</div>
 
-
+	<script src="./assets/js/script.js"></script>
+    
 </body>
 <script src="assets/js/core/jquery.3.2.1.min.js"></script>
 <script src="assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>

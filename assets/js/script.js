@@ -1,6 +1,5 @@
-// Fonction de validation du formulaire
+
 function validateForm() {
-    // Récupérer les valeurs des champs
     var name = document.getElementById("name_input").value;
     var photo = document.getElementById("photo_input").files.length;
     var club = document.getElementById("clubSelect").value;
@@ -13,7 +12,6 @@ function validateForm() {
     var defending = document.getElementById("defending_input").value;
     var physical = document.getElementById("physical_input").value;
 
-    // Vérifier que tous les champs requis sont remplis
     if (name === "") {
         alert("Name is required.");
         return false;
