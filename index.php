@@ -304,7 +304,7 @@
 					</div>
 					<div class="form-group">
 						<label for="rating_input">Rating: </label>
-						<input type="text" class="form-control input-square" id="rating_input" name="rating_input" placeholder="1 - 99">
+						<input type="number" class="form-control input-square" id="rating_input" name="rating_input" placeholder="1 - 99">
 					</div>
 					<div class="form-group">
 						<label for="positionSelect">Position:</label>
@@ -322,31 +322,31 @@
 					<div class="form-group row">
 						<div class="col-md-6">
 							<label for="pace_input">Pace: </label>
-							<input type="text" class="form-control form-control-sm" id="pace_input" name="pace_input" placeholder="enter rating">
+							<input type="number" class="form-control form-control-sm" id="pace_input" name="pace_input" placeholder="enter rating">
 						</div>
 						<div class="col-md-6">
 							<label for="dribbling_input">Dribbling: </label>
-							<input type="text" class="form-control form-control-sm" id="dribbling_input" name="dribbling_input" placeholder="enter rating">
+							<input type="number" class="form-control form-control-sm" id="dribbling_input" name="dribbling_input" placeholder="enter rating">
 						</div>
 					</div>
 					<div class="form-group row">
 						<div class="col-md-6">
 							<label for="passing_input">Passing: </label>
-							<input type="text" class="form-control form-control-sm" id="passing_input" name="passing_input" placeholder="enter rating">
+							<input type="number" class="form-control form-control-sm" id="passing_input" name="passing_input" placeholder="enter rating">
 						</div>
 						<div class="col-md-6">
 							<label for="shooting_input">Shooting: </label>
-							<input type="text" class="form-control form-control-sm" id="shooting_input" name="shooting_input" placeholder="enter rating">
+							<input type="number" class="form-control form-control-sm" id="shooting_input" name="shooting_input" placeholder="enter rating">
 						</div>
 					</div>
 					<div class="form-group row">
 						<div class="col-md-6">
 							<label for="defending_input">Defending: </label>
-							<input type="text" class="form-control form-control-sm" id="defending_input" name="defending_input" placeholder="enter rating">
+							<input type="number" class="form-control form-control-sm" id="defending_input" name="defending_input" placeholder="enter rating">
 						</div>
 						<div class="col-md-6">
 							<label for="physical_input">Physical: </label>
-							<input type="text" class="form-control form-control-sm" id="physical_input" name="physical_input" placeholder="enter rating">
+							<input type="number" class="form-control form-control-sm" id="physical_input" name="physical_input" placeholder="enter rating">
 						</div>
 					</div>
 

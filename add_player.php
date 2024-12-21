@@ -4,18 +4,18 @@
 
     // Get the form data from POST
     $name = validate_input($_POST['name_input'],'string');
-    $nationality = $_POST['nationalitySelect'];
-    $clubName = $_POST['clubSelect']; 
+    $nationality = validate_input($_POST['nationalitySelect']);
+    $clubName = validate_input($_POST['clubSelect']); 
 
     // $logo = $_POST['logo_club'];
-    $rating = $_POST['rating_input'];
-    $position = $_POST['positionSelect'];
-    $pace = $_POST['pace_input'];
-    $dribbling = $_POST['dribbling_input'];
-    $passing = $_POST['passing_input'];
-    $shooting = $_POST['shooting_input'];
-    $defending = $_POST['defending_input'];
-    $physical = $_POST['physical_input'];
+    $rating = validate_input($_POST['rating_input'],'int');
+    $position = validate_input($_POST['positionSelect']);
+    $pace = validate_input($_POST['pace_input'],'int');
+    $dribbling = validate_input($_POST['dribbling_input'],'int');
+    $passing = validate_input($_POST['passing_input'],'int');
+    $shooting = validate_input($_POST['shooting_input'],'int');
+    $defending = validate_input($_POST['defending_input'],'int');
+    $physical = validate_input($_POST['physical_input'],'int');
     
     // photo player upload 
     $photo = $_FILES['photo_input']['name'];
@@ -60,7 +60,7 @@
         $club_id = mysqli_insert_id($conn);
     }
 
-if ($name ) {
+if ($name && $rating && $clubName && $rating && $position && $pace && $dribbling && $passing && $shooting && $defending && $physical) {
     if($position=='GK'){
         // inserting the statistics 
         $insert_stats_query_gk = "INSERT INTO goalkeepers (diving, handling, kicking, reflexes, speed, positioning) 
@@ -83,30 +83,30 @@ if ($name ) {
         $stmt = $conn->prepare($insert_player_query);
         $stmt->bind_param("ssiiiss", $name, $photo, $nationality_id, $club_id, $rating, $position, $goalkeeper_id);
 
-}
-else{
+    }
+    else{
 
-        // inserting the statistics 
-        $insert_stats_query = "INSERT INTO normal_players (pace, shooting, passing, dribbling, defending, physical) 
-        VALUES (?, ?, ?, ?, ?, ?)";
-        $stmt = $conn->prepare($insert_stats_query);
-        $stmt->bind_param("iiiiii", $pace, $shooting, $passing, $dribbling, $defending, $physical);
+            // inserting the statistics 
+            $insert_stats_query = "INSERT INTO normal_players (pace, shooting, passing, dribbling, defending, physical) 
+            VALUES (?, ?, ?, ?, ?, ?)";
+            $stmt = $conn->prepare($insert_stats_query);
+            $stmt->bind_param("iiiiii", $pace, $shooting, $passing, $dribbling, $defending, $physical);
 
-        if ($stmt->execute()) {
+            if ($stmt->execute()) {
 
-        $normal_player_id = $stmt->insert_id;
-        } else {
-        echo "Error inserting player statistics: " . $stmt->error;
-        exit;
-        }
-        $stmt->close();
-        
-        // insertion du joueur
-        $insert_player_query = "INSERT INTO players (name_player, photo, id_nationality, id_club, rating, position, id_normal_player) 
-        VALUES (?, ?, ?, ?, ?, ?, ?)";
-        $stmt = $conn->prepare($insert_player_query);
-        $stmt->bind_param("ssiiiss", $name, $photo, $nationality_id, $club_id, $rating, $position, $normal_player_id);
-}
+            $normal_player_id = $stmt->insert_id;
+            } else {
+            echo "Error inserting player statistics: " . $stmt->error;
+            exit;
+            }
+            $stmt->close();
+            
+            // insertion du joueur
+            $insert_player_query = "INSERT INTO players (name_player, photo, id_nationality, id_club, rating, position, id_normal_player) 
+            VALUES (?, ?, ?, ?, ?, ?, ?)";
+            $stmt = $conn->prepare($insert_player_query);
+            $stmt->bind_param("ssiiiss", $name, $photo, $nationality_id, $club_id, $rating, $position, $normal_player_id);
+    }
 } 
 
     if ($stmt->execute()) {
