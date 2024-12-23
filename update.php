@@ -289,23 +289,21 @@
                                     <label for="rating_input">Rating: </label>
                                     <input type="text" class="form-control input-square" id="rating_input" name="rating_input" placeholder="1 - 99" value=<?php echo $row['rating'] ?>>
                                 </div>
+                                <div class="form-group">
+                                    <label for="positionSelect">Position:</label>
+                                    <select class="form-control input-square" id="positionSelect" name="positionSelect"  >
+                                    <option value="ST" <?php echo ($row['position'] == 'ST') ? 'selected' : ''; ?>>ST</option>
+                                    <option value="RW" <?php echo ($row['position'] == 'RW') ? 'selected' : ''; ?>>RW</option>
+                                    <option value="LW" <?php echo ($row['position'] == 'LW') ? 'selected' : ''; ?>>LW</option>
+                                    <option value="CM" <?php echo ($row['position'] == 'CM') ? 'selected' : ''; ?>>CM</option>
+                                    <option value="CB" <?php echo ($row['position'] == 'CB') ? 'selected' : ''; ?>>CB</option>
+                                    <option value="LB" <?php echo ($row['position'] == 'LB') ? 'selected' : ''; ?>>LB</option>
+                                    <option value="RB" <?php echo ($row['position'] == 'RB') ? 'selected' : ''; ?>>RB</option>
+                                    <option value="GK" <?php echo ($row['position'] == 'GK') ? 'selected' : ''; ?>>GK</option>
+                                    </select>
+                                </div>
                                 <?php 
                                     if ($row['position'] == 'GK') {
-
-                                        echo '<div class="form-group">';
-                                        echo '<label for="positionSelect">Position:</label>';
-                                        echo '<select class="form-control input-square" id="positionSelect" name="positionSelect" disabled>';
-                                        echo '<option value="ST" ' . ($row['position'] == 'ST' ? 'selected' : '') . '>ST</option>';
-                                        echo '<option value="RW" ' . ($row['position'] == 'RW' ? 'selected' : '') . '>RW</option>';
-                                        echo '<option value="LW" ' . ($row['position'] == 'LW' ? 'selected' : '') . '>LW</option>';
-                                        echo '<option value="CM" ' . ($row['position'] == 'CM' ? 'selected' : '') . '>CM</option>';
-                                        echo '<option value="CB" ' . ($row['position'] == 'CB' ? 'selected' : '') . '>CB</option>';
-                                        echo '<option value="LB" ' . ($row['position'] == 'LB' ? 'selected' : '') . '>LB</option>';
-                                        echo '<option value="RB" ' . ($row['position'] == 'RB' ? 'selected' : '') . '>RB</option>';
-                                        echo '<option value="GK" ' . ($row['position'] == 'GK' ? 'selected' : '') . '>GK</option>';
-                                        echo '</select>';
-                                        echo '</div>';
-
                                         echo '<div class="form-group row">';
                                         echo '<div class="col-md-6">';
                                         echo '<label for="pace_input">Diving: </label>';
@@ -343,21 +341,6 @@
                                         echo '</div>';
                                     } 
                                     else {
-
-                                        echo '<div class="form-group">';
-                                        echo '<label for="positionSelect">Position:</label>';
-                                        echo '<select class="form-control input-square" id="positionSelect" name="positionSelect" >';
-                                        echo '<option value="ST" ' . ($row['position'] == 'ST' ? 'selected' : '') . '>ST</option>';
-                                        echo '<option value="RW" ' . ($row['position'] == 'RW' ? 'selected' : '') . '>RW</option>';
-                                        echo '<option value="LW" ' . ($row['position'] == 'LW' ? 'selected' : '') . '>LW</option>';
-                                        echo '<option value="CM" ' . ($row['position'] == 'CM' ? 'selected' : '') . '>CM</option>';
-                                        echo '<option value="CB" ' . ($row['position'] == 'CB' ? 'selected' : '') . '>CB</option>';
-                                        echo '<option value="LB" ' . ($row['position'] == 'LB' ? 'selected' : '') . '>LB</option>';
-                                        echo '<option value="RB" ' . ($row['position'] == 'RB' ? 'selected' : '') . '>RB</option>';
-                                        echo '<option disabled value="GK" ' . ($row['position'] == 'GK' ? 'selected' : '') . '>GK</option>';
-                                        echo '</select>';
-                                        echo '</div>';
-
                                         echo '<div class="form-group row">';
                                         echo '<div class="col-md-6">';
                                         echo '<label for="pace_input">Pace: </label>';
